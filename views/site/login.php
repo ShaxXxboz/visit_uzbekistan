@@ -37,6 +37,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php ActiveForm::end(); ?>
 
     <div class="col-lg-offset-1" style="color:#999;">
-        <?= $message?>
+        <span class="text-danger"><?= $message?></span>
     </div>
 </div>

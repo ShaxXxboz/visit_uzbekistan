@@ -30,14 +30,14 @@ class SiteController extends Controller
     }
 
 
-    public function actionLogin()
+    public function actionLogin($message = '')
     {
         $login_model = new Login();
 
         if (Yii::$app->request->post('Login')) {
             if ($login_model->load(Yii::$app->request->post()) && $login_model->validate()) {
                 \Yii::$app->user->login($login_model->getUser());
-                $this->goBack();
+                return $this->redirect(['user/index']);
             } else {
                 $this->redirect(['login', 'message' => 'You have entered wrong login or password. Please, try again!']);
             }
@@ -45,13 +45,14 @@ class SiteController extends Controller
 
         return $this->render('login', [
             'model' => $login_model,
+            'message' => $message
         ]);
     }
 
     public function actionLogout()
     {
         Yii::$app->user->logout();
-        return $this->redirect(['site/logout']);
+        return $this->redirect(['site/login']);
     }
 
 
