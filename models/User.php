@@ -17,12 +17,14 @@ use yii\web\IdentityInterface;
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
+
+    const ADMIN_ID = 1;
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'user';
+        return 'users';
     }
 
     /**
@@ -32,7 +34,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             [['login', 'password'], 'required'],
-            [['full_name', 'login', 'password'], 'string', 'max' => 255],
+            [[ 'login', 'password'], 'string', 'max' => 255],
         ];
     }
 

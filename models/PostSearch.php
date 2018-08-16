@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\User;
+use app\models\Post;
 
 /**
- * UserSearch represents the model behind the search form of `app\models\User`.
+ * PostSearch represents the model behind the search form of `app\models\Post`.
  */
-class UserSearch extends User
+class PostSearch extends Post
 {
     /**
      * {@inheritdoc}
@@ -18,8 +18,8 @@ class UserSearch extends User
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['login', 'password'], 'safe'],
+            [['id', 'pinned', 'status'], 'integer'],
+            [['title', 'content', 'thumbnail', 'slug', 'description', 'keywords', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class UserSearch extends User
      */
     public function search($params)
     {
-        $query = User::find();
+        $query = Post::find()->orderBy(['id' => SORT_DESC]);
 
         // add conditions that should always apply here
 
@@ -60,10 +60,17 @@ class UserSearch extends User
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'pinned' => $this->pinned,
+            'status' => $this->status,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'login', $this->login])
-            ->andFilterWhere(['like', 'password', $this->password]);
+        $query->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'content', $this->content])
+            ->andFilterWhere(['like', 'thumbnail', $this->thumbnail])
+            ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'keywords', $this->keywords]);
 
         return $dataProvider;
     }

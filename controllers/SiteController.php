@@ -22,12 +22,10 @@ class SiteController extends Controller
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
         ];
     }
+
+    public $layout = '/login';
 
 
     public function actionLogin($message = '')
@@ -37,7 +35,7 @@ class SiteController extends Controller
         if (Yii::$app->request->post('Login')) {
             if ($login_model->load(Yii::$app->request->post()) && $login_model->validate()) {
                 \Yii::$app->user->login($login_model->getUser());
-                return $this->redirect(['user/index']);
+                return $this->redirect(['/admin']);
             } else {
                 $this->redirect(['login', 'message' => 'You have entered wrong login or password. Please, try again!']);
             }

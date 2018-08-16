@@ -6,11 +6,11 @@ $db = require __DIR__ . '/db.php';
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
-    'defaultRoute' => 'site/login',
+    'defaultRoute' => 'site/index',
     'bootstrap' => ['log'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset',
     ],
     'components' => [
         'request' => [
@@ -22,7 +22,7 @@ $config = [
         ],
         'user' => [
             'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
+            'enableAutoLogin' => false,
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -44,26 +44,35 @@ $config = [
             ],
         ],
         'db' => $db,
-        
+
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-             ],
-    ],
+            ],
         ],
-        
+    ],
+
+    'modules' => [
+        'admin' => [
+            'class' => 'app\modules\admin\Admin',
+            'layout' => 'admin',
+            'defaultRoute' => 'posts/index',
+            //'homeUrl' => 'posts/index'
+        ],
+    ],
+
     'params' => $params,
 ];
 
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
-    $config['bootstrap'][] = 'debug';
+    /*$config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
         //'allowedIPs' => ['127.0.0.1', '::1'],
-    ];
+    ];*/
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
