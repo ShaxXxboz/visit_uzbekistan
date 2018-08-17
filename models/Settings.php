@@ -16,6 +16,8 @@ use yii\web\UploadedFile;
  */
 class Settings extends \yii\db\ActiveRecord
 {
+    public $favicon_file;
+
     /**
      * {@inheritdoc}
      */
@@ -23,8 +25,6 @@ class Settings extends \yii\db\ActiveRecord
     {
         return 'settings';
     }
-
-    public $favicon_file;
 
     /**
      * {@inheritdoc}
@@ -58,8 +58,12 @@ class Settings extends \yii\db\ActiveRecord
     public function faviconUpload()
     {
         if ($this->favicon_file = UploadedFile::getInstance($this, 'favicon_file')) {
-            $this->favicon = 'uploads/settings/favicon.' . $this->favicon_file->extension;
-            if ($this->favicon_file->saveAs('uploads/settings/favicon.' . $this->favicon_file->extension) AND
+            if ($this->favicon != '' AND file_exists($this->favicon)) {
+                unlink($this->favicon);
+            }
+
+            $this->favicon = 'uploads/settings/favicon.' . time() . '.' . $this->favicon_file->extension;
+            if ($this->favicon_file->saveAs('uploads/settings/favicon.' . time() . '.' . $this->favicon_file->extension) AND
                 $this->save()) {
                 return true;
             } else {

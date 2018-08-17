@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = 'Facebook Api Settings';
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'facebook_access_token')->textInput() ?>
+    <?= $form->field($model, 'facebook_access_token')->passwordInput() ?>
 
     <?= $form->field($model, 'facebook_channel')->textInput() ?>
 

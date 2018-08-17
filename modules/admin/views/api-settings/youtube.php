@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'youtube_api_key')->textInput() ?>
+    <?= $form->field($model, 'youtube_api_key')->passwordInput() ?>
 
     <?= $form->field($model, 'youtube_channel')->textInput() ?>
 

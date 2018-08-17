@@ -20,24 +20,18 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css',
-        'adminlte/bower_components/font-awesome/css/font-awesome.min.css',
-        'adminlte/bower_components/Ionicons/css/ionicons.min.css',
-        'adminlte/dist/css/AdminLTE.min.css',
-        'adminlte/dist/css/skins/_all-skins.min.css',
-        'adminlte/bower_components/Ionicons/css/ionicons.min.css',
-        'adminlte/bower_components/jquery-slimscroll/jquery.slimscroll.min.js',
+        'css/bootstrap.css',
+        'css/style.css',
+        'http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css',
+        'css/simplelightbox.min.css',
+        'css/ken-burns.css',
     ];
     public $js = [
-        'adminlte/bower_components/jquery/dist/jquery.min.js',
-        'adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js',
-        'adminlte/bower_components/jquery-slimscroll/jquery.slimscroll.min.js',
-        'adminlte/bower_components/fastclick/lib/fastclick.js',
-        'adminlte/dist/js/adminlte.min.js',
-        'adminlte/dist/js/demo.js',
-    ];
-    public $depends = [
-        /*'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',*/
+        'admin_asset/js/jquery.3.2.1.min.js',
+        'js/SmoothScroll.min.js',
+        'js/bootstrap.js',
+        'js/SmoothScroll.min.js',
+        'js/simple-lightbox.js',
+        'js/main.js',
     ];
 }

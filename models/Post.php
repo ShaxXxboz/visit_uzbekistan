@@ -18,13 +18,20 @@ use yii\web\UploadedFile;
  * @property int $pinned
  * @property int $slug
  * @property int $status
- * @property string $created_at
+ * @property string $created_atФ
  * @property string $updated_at
  */
 class Post extends \yii\db\ActiveRecord
 {
     public $thumbnail_file;
 
+    /**
+     * {@inheritdoc}
+     */
+    public static function tableName()
+    {
+        return 'posts';
+    }
 
     public function behaviors()
     {
@@ -44,14 +51,6 @@ class Post extends \yii\db\ActiveRecord
                 'value' => new Expression('NOW()'),
             ],
         ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
-    {
-        return 'posts';
     }
 
     /**
@@ -95,8 +94,13 @@ class Post extends \yii\db\ActiveRecord
     public function thumbnailUpload()
     {
         if ($this->thumbnail_file = UploadedFile::getInstance($this, 'thumbnail_file')) {
-            $this->thumbnail = 'uploads/posts/' . $this->id . '.' . $this->thumbnail_file->extension;
-            if ($this->thumbnail_file->saveAs('uploads/posts/' . $this->id . '.' . $this->thumbnail_file->extension) AND
+
+            if ($this->thumbnail != '' AND file_exists($this->thumbnail)) {
+                unlink($this->thumbnail);
+            }
+
+            $this->thumbnail = 'uploads/posts/' . $this->id . '.' . time() . '.' . $this->thumbnail_file->extension;
+            if ($this->thumbnail_file->saveAs('uploads/posts/' . $this->id . '.' . time() . '.' . $this->thumbnail_file->extension) AND
                 $this->save()) {
                 return true;
             } else {
@@ -107,14 +111,13 @@ class Post extends \yii\db\ActiveRecord
         }
     }
 
-    public function afterSave($insert, $changedAttributes) {
+    public function afterSave($insert, $changedAttributes)
+    {
         parent::afterSave($insert, $changedAttributes);
         \Yii::$app->session->setFlash('success', 'The post is saved');
 
-        if ($this->pinned == 1)
-        {
-            if (!$this->checkOtherPins($this->id))
-            {
+        if ($this->pinned == 1) {
+            if (!$this->checkOtherPins($this->id)) {
                 $this->pinned = 0;
                 $this->save();
                 \Yii::$app->session->setFlash('error', 'Was not able to pin the message');
@@ -132,10 +135,8 @@ class Post extends \yii\db\ActiveRecord
     {
         $posts = self::find()->where(['<>', 'id', $id])->all();
 
-        foreach ($posts as $post)
-        {
-            if ($post->pinned == 1)
-            {
+        foreach ($posts as $post) {
+            if ($post->pinned == 1) {
                 $post->pinned = 0;
                 if (!$post->save()) return false;
             }

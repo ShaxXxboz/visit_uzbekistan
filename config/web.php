@@ -6,7 +6,7 @@ $db = require __DIR__ . '/db.php';
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
-    'defaultRoute' => 'site/index',
+    'defaultRoute' => 'main/index',
     'bootstrap' => ['log'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -49,6 +49,9 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'index' => 'main/index',
+                'blog/page/<page:\d+>/<per-page:\d+>' => 'blog/index',
+                'blog/<slug:[\w\-]+>' => 'blog/view',
             ],
         ],
     ],

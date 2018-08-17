@@ -12,7 +12,7 @@ class InstagramApi extends SocialApi
 
     public function __construct($access_token)
     {
-        $this->access_token;
+        $this->access_token = $access_token;
     }
 
     /**
@@ -20,16 +20,13 @@ class InstagramApi extends SocialApi
      * function which retrieves images from users account
      */
 
-    public function getGallery($limit = 10)
+    public function getGallery($limit = 5)
     {
-
-        $url = "https://api.instagram.com/v1/users/self/media/recent?access_token=$this->access_token&count=$limit";
+        $url = "https://api.instagram.com/v1/users/self/media/recent?access_token=$this->access_token";
 
         $all_result = $this->processURL($url);
 
         $decoded_results = json_decode($all_result, true);
-
-        return $decoded_results;
 
         if ($decoded_results['data']) {
             foreach ($decoded_results['data'] as $item) {

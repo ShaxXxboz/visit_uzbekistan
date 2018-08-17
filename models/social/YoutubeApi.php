@@ -11,12 +11,22 @@ namespace app\models\social;
 
 class YoutubeApi extends SocialApi
 {
-    public $app_key;
+    private $app_key;
+    private $channel;
 
-
-    public function getVideos($limit = 5)
+    public function __construct($app_key, $channel)
     {
-        $url = "https://www.googleapis.com/youtube/v3/search?key=$this->app_key&part=snippet,id&order=date&maxResults=$limit";
+        $this->app_key = $app_key;
+        $this->channel = $channel;
+    }
+
+
+    public function getVideos($limit = 6)
+    {
+        $url = "https://www.googleapis.com/youtube/v3/search?key=$this->app_key&channelId=$this->channel&part=snippet,id&order=date&maxResults=$limit";
+        $feed = $this->processURL($url);
+
+        return json_decode($feed);
     }
 
 }
