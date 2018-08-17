@@ -11,6 +11,10 @@
 
 ### Данные
 * Адрес: http://uzbekistan.phpforgeeks.com
+* Адрес: http://uzbekistan.phpforgeeks.com/admin
+(Login: admin; Password: admin)
+* Профиль Инстаграм: https://www.instagram.com/visituzbekistan2018/
+* Профиль Youtube: https://www.youtube.com/channel/UCilhbsbhiXgTjQjpw7DATgQ
 * Язык: Английский
 * Язык админ-панели: Английский
 
